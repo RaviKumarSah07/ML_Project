@@ -1,0 +1,9 @@
+task_log.md
+**/task_log.md
+review/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.docx
+build_project_report.py
+

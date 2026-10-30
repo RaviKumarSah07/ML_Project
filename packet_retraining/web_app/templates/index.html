@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="theme-color" content="#030608">
+  <title>Aegis — Network intelligence</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="site-shell" id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-art" src="{{ url_for('static', filename='hero-network.png') }}" alt="Abstract network of connected signals" fetchpriority="high">
+      <div class="hero-shade"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-one" aria-hidden="true"></div>
+      <div class="hero-orbit orbit-two" aria-hidden="true"></div>
+
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Aegis home">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>AEGIS<small>NETWORK INTELLIGENCE</small></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#overview">Model</a>
+          <a href="#posture">Assessment</a>
+          <a href="#analyze">Analyze</a>
+          <a href="#activity">Activity</a>
+        </nav>
+        <span class="header-state"><span class="state-dot"></span><span id="top-status">SYSTEM READY</span></span>
+      </header>
+
+      <div class="hero-content">
+        <span class="hero-eyebrow"><i></i> AI-POWERED NETWORK DEFENSE</span>
+        <h1 id="hero-title">See every signal.<br><span>Understand the threat.</span></h1>
+        <p>Turn raw network flow data into clear, immediate intelligence with your trained intrusion detection model.</p>
+        <div class="hero-actions">
+          <a class="primary-cta" href="#analyze">Analyze traffic <span aria-hidden="true">&nearr;</span></a>
+          <a class="ghost-cta" href="#overview">Explore the model <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+
+      <div class="hero-footer" aria-label="Model summary">
+        <div><span>SELECTED MODEL</span><strong>{{ model_name }}</strong></div>
+        <div><span>HELD-OUT TEST F1</span><strong>{{ '%.1f'|format(model_metrics.f1_score * 100) }}%</strong></div>
+        <div><span>INPUT SIGNALS</span><strong>8 flow fields</strong></div>
+        <div class="hero-scroll"><span>SCROLL TO EXPLORE</span><i aria-hidden="true"></i></div>
+      </div>
+    </section>
+
+    <main>
+      <section class="overview reveal" id="overview">
+        <div class="section-heading">
+          <span class="section-index">01 / THE MODEL</span>
+          <div>
+            <h2>Precision built into<br>every decision.</h2>
+            <p>Aegis converts eight packet-derived flow fields into a focused signal for investigation. The model runs locally in this Flask service and scores each flow in real time.</p>
+          </div>
+        </div>
+
+        <div class="snapshot">
+          <article class="snapshot-intro">
+            <span class="card-kicker">MODEL PROFILE</span>
+            <h3>Flow-level intrusion intelligence.</h3>
+            <p>Trained on UNSW-NB15 records and selected by validation F1.</p>
+            <span class="model-pill"><i></i> {{ model_name }} ACTIVE</span>
+          </article>
+          <div class="snapshot-metrics">
+            <article><span>TEST F1</span><strong>{{ '%.1f'|format(model_metrics.f1_score * 100) }}<small>%</small></strong><i style="--level: {{ '%.1f'|format(model_metrics.f1_score * 100) }}%"></i></article>
+            <article><span>ATTACK RECALL</span><strong>{{ '%.1f'|format(model_metrics.recall_attack * 100) }}<small>%</small></strong><i style="--level: {{ '%.1f'|format(model_metrics.recall_attack * 100) }}%"></i></article>
+            <article><span>NORMAL RECALL</span><strong>{{ '%.1f'|format(model_metrics.specificity_normal_recall * 100) }}<small>%</small></strong><i style="--level: {{ '%.1f'|format(model_metrics.specificity_normal_recall * 100) }}%"></i></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="assessment reveal" id="posture" aria-live="polite">
+        <div class="assessment-main">
+          <span class="section-index">02 / CURRENT ASSESSMENT</span>
+          <div class="assessment-content">
+            <span class="assessment-state" id="posture-label">AWAITING ANALYSIS</span>
+            <h2 id="posture-title">Your signal starts here.</h2>
+            <p id="posture-description">Submit a flow, inspect a capture, or begin local monitoring to see the model's assessment.</p>
+          </div>
+          <span class="assessment-origin" id="posture-origin">LOCAL MODEL / NO FLOW ANALYZED</span>
+        </div>
+        <div class="signal-visual" aria-hidden="true">
+          <div class="radar-sweep"></div>
+          <svg class="signal-map" viewBox="0 0 460 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M29 169 92 139 141 164 198 109 247 139 315 82 428 105M92 139 130 60 198 109 203 206 289 197 315 82M141 164 203 206M247 139 289 197 398 191 428 105M315 82 359 33 428 105"/>
+            <g class="map-nodes"><circle cx="29" cy="169" r="4"/><circle cx="92" cy="139" r="4"/><circle cx="130" cy="60" r="4"/><circle cx="141" cy="164" r="4"/><circle cx="198" cy="109" r="4"/><circle cx="203" cy="206" r="4"/><circle cx="247" cy="139" r="4"/><circle cx="289" cy="197" r="4"/><circle cx="315" cy="82" r="4"/><circle cx="359" cy="33" r="4"/><circle cx="398" cy="191" r="4"/><circle cx="428" cy="105" r="4"/></g>
+            <circle class="focus-ring" cx="315" cy="82" r="18"/><circle class="focus-node" cx="315" cy="82" r="6"/>
+          </svg>
+          <div class="signal-readout"><span id="radar-icon">○</span><strong id="radar-value">--</strong><small id="radar-caption">MODEL SCORE</small></div>
+        </div>
+      </section>
+
+      <section class="session-stats reveal" aria-label="Session statistics">
+        <div class="session-stat"><span>FLOWS ANALYZED</span><strong id="stat-total">0</strong><small>In this session</small></div>
+        <div class="session-stat"><span>ATTACK FLAGS</span><strong id="stat-attacks">0</strong><small>Require review</small></div>
+        <div class="session-stat"><span>NORMAL FLOWS</span><strong id="stat-normal">0</strong><small>Model assessment</small></div>
+        <div class="session-stat"><span>LIVE CAPTURE</span><strong id="stat-capture">OFFLINE</strong><small id="stat-packets">0 packets observed</small></div>
+      </section>
+
+      <section class="work-section reveal" id="analyze">
+        <div class="section-heading work-heading">
+          <span class="section-index">03 / ANALYZE TRAFFIC</span>
+          <div><h2>Choose your signal source.</h2><p>Enter a flow manually, upload a packet capture, or monitor an available local interface. Every result feeds the same live assessment.</p></div>
+        </div>
+
+        <div class="workspace">
+          <section class="panel analyzer-panel">
+            <div class="panel-heading"><div><span>INPUT CONSOLE</span><h3>Start an analysis</h3></div><span class="panel-number">01</span></div>
+            <div class="tabs" role="tablist" aria-label="Analysis method">
+              <button class="tab active" type="button" role="tab" aria-selected="true" data-tab="manual">Manual flow</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="pcap">PCAP upload</button>
+              <button class="tab" type="button" role="tab" aria-selected="false" data-tab="live">Live monitor</button>
+            </div>
+
+            <div class="tab-panel active" id="panel-manual" role="tabpanel">
+              <p class="panel-lead">Enter the eight fields used by the selected model.</p>
+              <form id="manual-form">
+                <div class="sample-row"><span>LOAD DATASET EXAMPLE</span><button type="button" data-sample="normal">Normal flow</button><button type="button" data-sample="attack">Attack flow</button></div>
+                <div class="form-grid">
+                  <label class="field full"><span>Protocol</span><input name="proto" type="text" placeholder="e.g. tcp, udp, icmp" required autocomplete="off"></label>
+                  <label class="field"><span>Duration <em>seconds</em></span><input name="dur" type="number" min="0" step="any" placeholder="0.125" required></label>
+                  <label class="field"><span>Source packets</span><input name="spkts" type="number" min="0" step="1" placeholder="6" required></label>
+                  <label class="field"><span>Destination packets</span><input name="dpkts" type="number" min="0" step="1" placeholder="4" required></label>
+                  <label class="field"><span>Source bytes</span><input name="sbytes" type="number" min="0" step="1" placeholder="258" required></label>
+                  <label class="field"><span>Destination bytes</span><input name="dbytes" type="number" min="0" step="1" placeholder="172" required></label>
+                  <label class="field"><span>Source TTL</span><input name="sttl" type="number" min="0" max="255" step="1" placeholder="64" required></label>
+                  <label class="field"><span>Destination TTL</span><input name="dttl" type="number" min="0" max="255" step="1" placeholder="64" required></label>
+                </div>
+                <button class="primary-button" type="submit">Analyze flow <span aria-hidden="true">&nearr;</span></button>
+              </form>
+            </div>
+
+            <div class="tab-panel" id="panel-pcap" role="tabpanel" hidden>
+              <p class="panel-lead">Upload a local capture. Packets are grouped into flows before scoring.</p>
+              <form id="pcap-form">
+                <label class="dropzone" for="pcap-file"><span class="drop-icon">&uarr;</span><strong id="file-name">Drop a capture here or browse files</strong><small>PCAP / PCAPNG &middot; Up to 20 MB</small></label>
+                <input id="pcap-file" name="file" type="file" accept=".pcap,.pcapng" required hidden>
+                <button class="primary-button" type="submit">Analyze capture <span aria-hidden="true">&nearr;</span></button>
+              </form>
+              <div class="upload-summary" id="upload-summary" hidden></div>
+            </div>
+
+            <div class="tab-panel" id="panel-live" role="tabpanel" hidden>
+              <p class="panel-lead">Monitor a local interface. Capture begins only when you click Start.</p>
+              <div class="live-note" id="tshark-note">Checking Wireshark TShark availability...</div>
+              <label class="field full"><span>Network interface</span><select id="interface-select"><option value="">Select an interface</option></select></label>
+              <div class="live-actions"><button class="primary-button" id="start-button" type="button">Start monitoring <span aria-hidden="true">●</span></button><button class="secondary-button" id="stop-button" type="button" disabled>Stop capture</button></div>
+              <div class="capture-readout"><span class="capture-led" id="capture-led"></span><span id="capture-message">Capture idle</span></div>
+            </div>
+            <p class="form-message" id="form-message" role="status"></p>
+          </section>
+
+          <section class="panel activity-panel" id="activity">
+            <div class="panel-heading"><div><span>EVENT STREAM</span><h3>Recent activity</h3></div><span class="panel-number">02</span></div>
+            <p class="panel-lead">A live record of every signal analyzed in this session.</p>
+            <div class="activity-list" id="activity-list"><div class="empty-activity"><span class="empty-orbit">○</span><strong>No signals yet</strong><p>Your analyzed flows and alerts will appear here.</p></div></div>
+            <div class="activity-footer"><span>Latest 80 results shown</span><span>LOCAL SESSION ONLY</span></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="notice reveal" id="about"><span>ABOUT THE RESULT</span><p>The model was tested on UNSW-NB15 flow records and flagged 15,596 of 37,000 normal test flows. PCAP and live results are experimental because packet-derived fields have not been verified against matching dataset captures. Scores are model outputs, not calibrated probabilities. A flag is a lead for investigation, not proof of an intrusion.</p></section>
+    </main>
+
+    <footer><span>AEGIS / NETWORK INTELLIGENCE</span><span>LOCAL ANALYSIS &middot; POWERED BY YOUR TRAINED MODEL</span><a href="#top">BACK TO TOP &uarr;</a></footer>
+  </div>
+</body>
+</html>

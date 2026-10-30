@@ -1,0 +1,41 @@
+{
+  "input_fields": [
+    "proto",
+    "dur",
+    "spkts",
+    "dpkts",
+    "sbytes",
+    "dbytes",
+    "sttl",
+    "dttl"
+  ],
+  "encoded_features": [
+    "proto=tcp",
+    "proto=udp",
+    "proto=unas",
+    "proto=arp",
+    "proto=ospf",
+    "proto=sctp",
+    "proto=any",
+    "proto=gre",
+    "proto=swipe",
+    "proto=rsvp",
+    "proto=mobile",
+    "proto=pim",
+    "proto=ipv6",
+    "proto=sep",
+    "proto=sun-nd",
+    "proto=__OTHER__",
+    "dur",
+    "spkts",
+    "dpkts",
+    "sbytes",
+    "dbytes",
+    "sttl",
+    "dttl"
+  ],
+  "selection_metric": "validation_f1_score",
+  "decision_threshold": 0.5,
+  "validation_fraction": 0.1,
+  "random_seed": 42
+}

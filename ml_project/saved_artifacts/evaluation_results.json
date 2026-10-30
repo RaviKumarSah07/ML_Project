@@ -1,0 +1,64 @@
+{
+  "ANN": {
+    "accuracy": 0.8562891706748288,
+    "precision": 0.79815942183773,
+    "recall_attack": 0.9891246801376511,
+    "f1_score": 0.8834400551669785,
+    "specificity_normal_recall": 0.6935405405405406,
+    "confusion_matrix": [
+      [
+        25661,
+        11339
+      ],
+      [
+        493,
+        44839
+      ]
+    ],
+    "train_time_sec": 21.45817804336548,
+    "inference_time_sec": 0.05419135093688965,
+    "config": {
+      "hidden_layers": [
+        64,
+        32
+      ],
+      "learning_rate": 0.01,
+      "epochs": 50,
+      "batch_size": 256,
+      "early_stopping_patience": 5,
+      "layer_sizes": [
+        79,
+        64,
+        32,
+        1
+      ],
+      "epochs_actually_run": 50
+    }
+  },
+  "Random Forest": {
+    "accuracy": 0.8529490356119127,
+    "precision": 0.7935848723159848,
+    "recall_attack": 0.9905806053119209,
+    "f1_score": 0.8812072568855048,
+    "specificity_normal_recall": 0.6843243243243243,
+    "confusion_matrix": [
+      [
+        25320,
+        11680
+      ],
+      [
+        427,
+        44905
+      ]
+    ],
+    "train_time_sec": 16.74658966064453,
+    "inference_time_sec": 3.838400363922119,
+    "config": {
+      "n_trees": 50,
+      "max_depth": 12,
+      "min_samples_split": 10,
+      "min_samples_leaf": 5,
+      "bootstrap_sample_size": 25000
+    }
+  }
+}
